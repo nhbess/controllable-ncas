@@ -1,6 +1,7 @@
 import math
 from datetime import datetime
 from typing import Any, Optional, Tuple  # noqa
+import os 
 
 import torch
 from torch.utils.tensorboard import SummaryWriter
@@ -21,7 +22,8 @@ class NCATrainer:
         self.num_damaged = num_damaged
 
         self.log_base_path = log_base_path
-        self.log_path = "{}/{}".format(log_base_path, datetime.now())
+        timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S.%f")
+        self.log_path = os.path.join(log_base_path, timestamp)
         print("Writing to {}".format(self.log_path))
         self.train_writer = SummaryWriter(self.log_path, flush_secs=10)
         self.sort_loss = self.loss
